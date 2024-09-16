@@ -1,0 +1,36 @@
+{
+  "strategy_name": "BBRSIEDITION",
+  "params": {
+    "buy": {
+      "buy_rsi_enable": false,
+      "buy_rsi_value": 11,
+      "buy_trigger": "bb_lowerband3"
+    },
+    "sell": {
+      "sell_rsi_enable": true,
+      "sell_rsi_value": 34,
+      "sell_trigger": "bb_lowerband1"
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.15500000000000003,
+      "34": 0.07100000000000001,
+      "47": 0.037,
+      "140": 0
+    },
+    "stoploss": {
+      "stoploss": -0.172
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.036,
+      "trailing_stop_positive_offset": 0.057999999999999996,
+      "trailing_only_offset_is_reached": true
+    },
+    "max_open_trades": {
+      "max_open_trades": 8
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2024-09-09 10:59:51.252583+00:00"
+}

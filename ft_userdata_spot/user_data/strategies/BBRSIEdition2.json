@@ -1,0 +1,33 @@
+{
+  "strategy_name": "BBRSIEDITION2",
+  "params": {
+    "roi": {
+      "0": 0.5
+    },
+    "stoploss": {
+      "stoploss": -1.0
+    },
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": 0.282,
+      "trailing_stop_positive_offset": 0.347,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": Infinity
+    },
+    "buy": {
+      "buy_BB": 4.0,
+      "buy_rsi_enable": true,
+      "buy_rsi_value": 50
+    },
+    "sell": {
+      "sell_rsi_enable": true,
+      "sell_rsi_value": 97,
+      "sell_trigger": "bb_upperband1"
+    },
+    "protection": {}
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2024-09-10 10:37:29.551006+00:00"
+}

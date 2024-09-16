@@ -1,0 +1,36 @@
+{
+  "strategy_name": "BBRSIEDITION_MTG",
+  "params": {
+    "buy": {
+      "buy_rsi_enable": true,
+      "buy_rsi_value": 39,
+      "buy_trigger": "bb_lowerband3"
+    },
+    "sell": {
+      "sell_rsi_enable": true,
+      "sell_rsi_value": 98,
+      "sell_trigger": "bb_lowerband1"
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.181,
+      "17": 0.081,
+      "28": 0.016,
+      "70": 0
+    },
+    "stoploss": {
+      "stoploss": -0.262
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.178,
+      "trailing_stop_positive_offset": 0.22499999999999998,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 10
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2024-09-10 13:07:53.220305+00:00"
+}
