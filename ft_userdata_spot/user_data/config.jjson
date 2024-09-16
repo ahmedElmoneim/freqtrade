@@ -1,0 +1,98 @@
+
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "max_open_trades": -1,
+    "stake_currency": "FDUSD",
+    "stake_amount": 20,
+    "tradable_balance_ratio": 1,
+    "fiat_display_currency": "USD",
+    "dry_run": false,
+    "dry_run_wallet": 100,
+    "cancel_open_orders_on_exit": false,
+    "trading_mode": "spot",
+    "margin_mode": "",
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 10,
+        "exit_timeout_count": 0,
+        "unit": "minutes"
+    },
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1,
+        "price_last_balance": 0.0,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+
+    },
+    "exit_pricing":{
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    "exchange": {
+        "name": "binance",
+        "key": "0p6OrxuD7cFcBffHsu2bWyDtccKXL2iHERW1aIpvHbLsEnAWKhDItq1MXemHdggm",
+        "secret": "5ytrfilQepXQ2SJTQYardvVc7fa5xrtcMQGpwZX84bgso8yOflvLVH2NhOX4cN1O",
+        "ccxt_config": {"enableRateLimit": true},
+        "ccxt_async_config": { "enableRateLimit": true,
+        "rateLimit": 200},
+        "pair_whitelist": [
+            "BTC/FDUSD",
+            "ETH/FDUSD",
+            "BNB/FDUSD",
+            "XRP/FDUSD",
+            "ADA/FDUSD",
+            "SOL/FDUSD",
+            "AAVE/FDUSD",
+            "DOGE/FDUSD",
+            "ALGO/FDUSD",
+            "ATOM/FDUSD",
+            "AVAX/FDUSD",
+            "BCH/FDUSD",
+            "EGLD/FDUSD",
+            "UNI/FDUSD",
+            "PEPE/FDUSD",
+            "LTC/FDUSD",
+            "LINK/FDUSD",
+            "FIL/FDUSD",
+            "DOT/FDUSD",
+            "THETA/FDUSD",
+            "MATIC/FDUSD",
+            "ETC/FDUSD",
+            "GAS/FDUSD"
+        ],
+        "pair_blacklist": [
+
+        ]
+    },
+    "pairlists": [
+        {"method": "StaticPairList"}
+    ],
+    "telegram": {
+        "enabled": true,
+        "token": "7147645390:AAEgeJ1GJP_NSxdWdBmph-0SfFxrLX_8oT0",
+        "chat_id": "1486443491"
+    },
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "0.0.0.0",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "e2f887dafd52392ab04ee89e5bf315637ba49c5dc9a2417df71496127b4db05b",
+        "ws_token": "Mma0I4eLdyEMUIR0VSLVuN0yRB-84jpHug",
+        "CORS_origins": [],
+        "username": "freqtrader",
+        "password": "freq735"
+    },
+    "bot_name": "freqtrade",
+    "initial_state": "running",
+    "force_entry_enable": false,
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}

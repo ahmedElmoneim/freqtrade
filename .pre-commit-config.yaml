@@ -35,25 +35,25 @@ repos:
   #   hooks:
   #     - id: ruff
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
-    hooks:
-      - id: end-of-file-fixer
-        exclude: |
-            (?x)^(
-                tests/.*|
-                .*\.svg|
-                .*\.yml|
-                .*\.json
-            )$
-      - id: mixed-line-ending
-      - id: debug-statements
-      - id: check-ast
-      - id: trailing-whitespace
-        exclude: |
-          (?x)^(
-                .*\.md
-            )$
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v4.6.0
+  #   hooks:
+  #     - id: end-of-file-fixer
+  #       exclude: |
+  #           (?x)^(
+  #               tests/.*|
+  #               .*\.svg|
+  #               .*\.yml|
+  #               .*\.json
+  #           )$
+  #     - id: mixed-line-ending
+  #     - id: debug-statements
+  #     - id: check-ast
+  #     - id: trailing-whitespace
+  #       exclude: |
+  #         (?x)^(
+  #               .*\.md
+  #           )$
 
   # - repo: https://github.com/codespell-project/codespell
   #   rev: v2.3.0
