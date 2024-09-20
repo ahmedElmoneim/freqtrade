@@ -1,7 +1,9 @@
 # --- Do not remove these libs ---
+from typing import Optional
 from freqtrade.strategy.interface import IStrategy
 from pandas import DataFrame
 import talib.abstract as ta
+from freqtrade.strategy.parameters import DecimalParameter
 import freqtrade.vendor.qtpylib.indicators as qtpylib
 import pandas as pd  # noqa
 pd.options.mode.chained_assignment = None  # default='warn'
@@ -86,6 +88,26 @@ class ichiV1(IStrategy):
             }
         }
     }
+    Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.33, space="buy")
+    # Stack_AmountP = IntParameter(1, 20, default=5 ,space="buy")
+    def custom_stake_amount(self, pair: str, current_time: datetime, current_rate: float,
+                                proposed_stake: float, min_stake: Optional[float], max_stake: float,
+                                leverage: float, entry_tag: Optional[str], side: str,
+                                **kwargs) -> float:
+
+            # dataframe, _ = self.dp.get_analyzed_dataframe(pair=pair, timeframe=self.timeframe)
+            # current_candle = dataframe.iloc[-1].squeeze()
+
+            # if current_candle["fastk_rsi_1h"] > current_candle["fastd_rsi_1h"]:
+            #     if self.config["stake_amount"] == "unlimited":
+            #         # Use entire available wallet during favorable conditions when in compounding mode.
+            #         return max_stake
+            #     else:
+            #         # Compound profits during favorable conditions instead of using a static stake.
+            #         return self.wallets.get_total_stake_amount() / self.config["max_open_trades"]
+            # proposed_stake = 10
+            # Use default stake amount.
+            return self.wallets.get_total_stake_amount() *self.Stack_AmountP.value
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
 
