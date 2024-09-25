@@ -34,16 +34,23 @@ class ichiV1(IStrategy):
     }
 
     # ROI table:
+    # minimal_roi = {
+    #     "0": 0.059,
+    #     "10": 0.037,
+    #     "41": 0.012,
+    #     "114": 0
+    # }
     minimal_roi = {
-        "0": 0.059,
-        "10": 0.037,
-        "41": 0.012,
+        "0": 0.02,
+        "10": 0.0137,
+        "20": 0.0093,
+        "41": 0.005,
+        "60": 0.002,
         "114": 0
     }
-
     # Stoploss:
-    stoploss = -0.275
-
+    # stoploss = -0.275
+    stoploss = -0.02
     # Optimal timeframe for the strategy
     timeframe = '5m'
 
@@ -88,7 +95,7 @@ class ichiV1(IStrategy):
             }
         }
     }
-    Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.33, space="buy")
+    Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.99, space="buy")
     # Stack_AmountP = IntParameter(1, 20, default=5 ,space="buy")
     def custom_stake_amount(self, pair: str, current_time: datetime, current_rate: float,
                                 proposed_stake: float, min_stake: Optional[float], max_stake: float,

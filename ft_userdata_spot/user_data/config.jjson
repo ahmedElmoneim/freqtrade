@@ -3,17 +3,17 @@
     "$schema": "https://schema.freqtrade.io/schema.json",
     "max_open_trades": -1,
     "stake_currency": "FDUSD",
-    "stake_amount": 20,
+    "stake_amount": 10,
     "tradable_balance_ratio": 1,
     "fiat_display_currency": "USD",
-    "dry_run": false,
-    "dry_run_wallet": 100,
+    "dry_run": true,
+    "dry_run_wallet": 500,
     "cancel_open_orders_on_exit": false,
     "trading_mode": "spot",
     "margin_mode": "",
     "unfilledtimeout": {
         "entry": 10,
-        "exit": 10,
+        "exit": 60,
         "exit_timeout_count": 0,
         "unit": "minutes"
     },
@@ -30,8 +30,9 @@
     },
     "exit_pricing":{
         "price_side": "same",
-        "use_order_book": true,
+        "use_order_book": false,
         "order_book_top": 1
+        
     },
     "exchange": {
         "name": "binance",
@@ -41,36 +42,32 @@
         "ccxt_async_config": { "enableRateLimit": true,
         "rateLimit": 200},
         "pair_whitelist": [
-            "BTC/FDUSD",
-            "ETH/FDUSD",
-            "BNB/FDUSD",
-            "XRP/FDUSD",
-            "ADA/FDUSD",
-            "SOL/FDUSD",
-            "AAVE/FDUSD",
-            "DOGE/FDUSD",
-            "ALGO/FDUSD",
-            "ATOM/FDUSD",
-            "AVAX/FDUSD",
-            "BCH/FDUSD",
-            "EGLD/FDUSD",
-            "UNI/FDUSD",
-            "PEPE/FDUSD",
-            "LTC/FDUSD",
-            "LINK/FDUSD",
-            "FIL/FDUSD",
-            "DOT/FDUSD",
-            "THETA/FDUSD",
-            "MATIC/FDUSD",
-            "ETC/FDUSD",
-            "GAS/FDUSD"
-        ],
+            "BTC/FDUSD", "ETH/FDUSD", "SOL/FDUSD", "BNB/FDUSD", "DOGE/FDUSD", "XRP/FDUSD", "PEPE/FDUSD", "NOT/FDUSD", "WIF/FDUSD", "SUI/FDUSD", "NEAR/FDUSD", "TIA/FDUSD", "LINK/FDUSD", "ARB/FDUSD", "SEI/FDUSD", "ENA/FDUSD", "DOGS/FDUSD", "ADA/FDUSD", "POL/FDUSD", "AVAX/FDUSD", "BOME/FDUSD", "FET/FDUSD", "WLD/FDUSD", "FTM/FDUSD", "ARKM/FDUSD", "FLOKI/FDUSD", "LTC/FDUSD", "SHIB/FDUSD", "BONK/FDUSD", "FIL/FDUSD", "TAO/FDUSD", "RENDER/FDUSD", "ORDI/FDUSD", "ETHFI/FDUSD", "ZRO/FDUSD", "OP/FDUSD", "PENDLE/FDUSD", "APT/FDUSD", "ALT/FDUSD", "BCH/FDUSD", "JUP/FDUSD", "MEME/FDUSD", "INJ/FDUSD", "STRK/FDUSD", "STX/FDUSD", "ZK/FDUSD", "AAVE/FDUSD", "DYDX/FDUSD", "MANTA/FDUSD", "GRT/FDUSD", "DOT/FDUSD", "LDO/FDUSD", "W/FDUSD", "GALA/FDUSD", "AEVO/FDUSD", "PYTH/FDUSD", "ICP/FDUSD", "RAY/FDUSD", "ETC/FDUSD", "ATOM/FDUSD", "PEOPLE/FDUSD", "RUNE/FDUSD", "ENS/FDUSD", "JTO/FDUSD", "THETA/FDUSD", "AR/FDUSD", "EGLD/FDUSD", "ALGO/FDUSD", "UNI/FDUSD", "SAND/FDUSD", "AXL/FDUSD", "CHZ/FDUSD"],
         "pair_blacklist": [
 
         ]
     },
     "pairlists": [
-        {"method": "StaticPairList"}
+        {
+            "method": "MarketCapPairList",
+            "number_assets": 1000,
+            "max_rank": 250,
+            "refresh_period": 1800
+        },
+        {
+            "method": "VolatilityFilter",
+            "lookback_days": 10,
+            "min_volatility": 0.05,
+            "refresh_period": 1800
+        },
+        {
+            "method": "VolumePairList",
+            "number_assets": 100,  
+            "sort_key": "quoteVolume"
+        },
+       
+        {"method": "FullTradesFilter"}
+
     ],
     "telegram": {
         "enabled": true,
