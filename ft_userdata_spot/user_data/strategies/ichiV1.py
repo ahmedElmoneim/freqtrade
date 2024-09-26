@@ -23,8 +23,8 @@ class ichiV1(IStrategy):
         "buy_trend_above_senkou_level": 1,
         "buy_trend_bullish_level": 6,
         "buy_fan_magnitude_shift_value": 3,
-        "buy_min_fan_magnitude_gain": 1.002 # NOTE: Good value (Win% ~70%), alot of trades
-        #"buy_min_fan_magnitude_gain": 1.008 # NOTE: Very save value (Win% ~90%), only the biggest moves 1.008,
+        # "buy_min_fan_magnitude_gain": 1.002 # NOTE: Good value (Win% ~70%), alot of trades
+        "buy_min_fan_magnitude_gain": 1.008 # NOTE: Very save value (Win% ~90%), only the biggest moves 1.008,
     }
 
     # Sell hyperspace params:
@@ -34,12 +34,12 @@ class ichiV1(IStrategy):
     }
 
     # ROI table:
-    # minimal_roi = {
-    #     "0": 0.059,
-    #     "10": 0.037,
-    #     "41": 0.012,
-    #     "114": 0
-    # }
+    minimal_roi = {
+        "0": 0.059,
+        "10": 0.037,
+        "41": 0.012,
+        "114": 0
+    }
 
 
     # minimal_roi = {
@@ -50,12 +50,15 @@ class ichiV1(IStrategy):
     #     "60": 0.002,
     #     "114": 0
     # }
-    minimal_roi = {
-        "0": 0.01, #.2%
-        "18": .005, #0.5%
-        "30":0.001,
-        "114":0
-    }
+
+    # minimal_roi = {
+    #     "0": 0.01, #.2%
+    #     "10":0.008,
+    #     "18": .005, #0.5%
+    #     "30":0.001,
+    #     "90": 0
+    # }
+    
     # Stoploss:
     stoploss = -0.275
     # stoploss = -0.02

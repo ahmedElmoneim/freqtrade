@@ -1,8 +1,8 @@
 
 {
     "$schema": "https://schema.freqtrade.io/schema.json",
-    "max_open_trades": -1,
-    "stake_currency": "FDUSD",
+    "max_open_trades": 1,
+    "stake_currency": "USDT",
     "stake_amount": 10,
     "tradable_balance_ratio": 1,
     "fiat_display_currency": "USD",
@@ -13,7 +13,7 @@
     "margin_mode": "",
     "unfilledtimeout": {
         "entry": 10,
-        "exit": 60,
+        "exit": 2,
         "exit_timeout_count": 0,
         "unit": "minutes"
     },
@@ -34,6 +34,17 @@
         "order_book_top": 1
         
     },
+    "order_types" :{
+        "entry": "limit",
+        "exit": "limit",
+        "emergency_exit": "market",
+        "force_exit": "market",
+        "force_entry": "market",
+        "stoploss": "market",
+        "stoploss_on_exchange": true,
+        "stoploss_on_exchange_interval": 60
+    },
+
     "exchange": {
         "name": "binance",
         "key": "0p6OrxuD7cFcBffHsu2bWyDtccKXL2iHERW1aIpvHbLsEnAWKhDItq1MXemHdggm",
@@ -41,29 +52,30 @@
         "ccxt_config": {"enableRateLimit": true},
         "ccxt_async_config": { "enableRateLimit": true,
         "rateLimit": 200},
-        "pair_whitelist": [
-            "BTC/FDUSD", "ETH/FDUSD", "SOL/FDUSD", "BNB/FDUSD", "DOGE/FDUSD", "XRP/FDUSD", "PEPE/FDUSD", "NOT/FDUSD", "WIF/FDUSD", "SUI/FDUSD", "NEAR/FDUSD", "TIA/FDUSD", "LINK/FDUSD", "ARB/FDUSD", "SEI/FDUSD", "ENA/FDUSD", "DOGS/FDUSD", "ADA/FDUSD", "POL/FDUSD", "AVAX/FDUSD", "BOME/FDUSD", "FET/FDUSD", "WLD/FDUSD", "FTM/FDUSD", "ARKM/FDUSD", "FLOKI/FDUSD", "LTC/FDUSD", "SHIB/FDUSD", "BONK/FDUSD", "FIL/FDUSD", "TAO/FDUSD", "RENDER/FDUSD", "ORDI/FDUSD", "ETHFI/FDUSD", "ZRO/FDUSD", "OP/FDUSD", "PENDLE/FDUSD", "APT/FDUSD", "ALT/FDUSD", "BCH/FDUSD", "JUP/FDUSD", "MEME/FDUSD", "INJ/FDUSD", "STRK/FDUSD", "STX/FDUSD", "ZK/FDUSD", "AAVE/FDUSD", "DYDX/FDUSD", "MANTA/FDUSD", "GRT/FDUSD", "DOT/FDUSD", "LDO/FDUSD", "W/FDUSD", "GALA/FDUSD", "AEVO/FDUSD", "PYTH/FDUSD", "ICP/FDUSD", "RAY/FDUSD", "ETC/FDUSD", "ATOM/FDUSD", "PEOPLE/FDUSD", "RUNE/FDUSD", "ENS/FDUSD", "JTO/FDUSD", "THETA/FDUSD", "AR/FDUSD", "EGLD/FDUSD", "ALGO/FDUSD", "UNI/FDUSD", "SAND/FDUSD", "AXL/FDUSD", "CHZ/FDUSD"],
+        "pair_whitelist": ["ETH/USDT", "SOL/USDT", "PEPE/USDT", "SUI/USDT", "WIF/USDT", "BNB/USDT", "SEI/USDT", "WLD/USDT", "FET/USDT", "SAGA/USDT", "DOGE/USDT", "TAO/USDT", "NOT/USDT", "AVAX/USDT", "FTM/USDT", "DOGS/USDT", "NEAR/USDT", "BOME/USDT", "SHIB/USDT", "TIA/USDT", "RUNE/USDT", "ENA/USDT", "CELO/USDT", "AAVE/USDT", "ARB/USDT", "BONK/USDT", "INJ/USDT", "FLOKI/USDT", "ZRO/USDT", "ORDI/USDT", "STRK/USDT", "APT/USDT", "ADA/USDT", "LINK/USDT", "PEOPLE/USDT", "PENDLE/USDT", "ZK/USDT", "AR/USDT", "JUP/USDT", "CRV/USDT", "ARKM/USDT", "STX/USDT", "FIL/USDT", "ETHFI/USDT", "ICP/USDT", "RENDER/USDT", "ALT/USDT", "POL/USDT", "OP/USDT", "BCH/USDT", "CHZ/USDT", "DOT/USDT", "CFX/USDT", "LTC/USDT", "GALA/USDT", "DYDX/USDT", "BLUR/USDT", "ATOM/USDT", "JTO/USDT", "MANTA/USDT", "LDO/USDT", "AEVO/USDT", "MKR/USDT", "DYM/USDT", "GMT/USDT", "UNI/USDT", "CKB/USDT", "LUNA/USDT", "ZRX/USDT", "HBAR/USDT", "LUNC/USDT", "ENS/USDT", "SUPER/USDT", "GRT/USDT", "MINA/USDT", "JASMY/USDT", "CAKE/USDT", "MEME/USDT", "EOS/USDT", "OM/USDT", "ILV/USDT", "THETA/USDT", "PYTH/USDT", "W/USDT", "IMX/USDT", "KAVA/USDT", "1INCH/USDT", "LPT/USDT", "ROSE/USDT", "METIS/USDT", "GLM/USDT", "ALGO/USDT", "VET/USDT", "POLYX/USDT", "APE/USDT", "RSR/USDT", "SAND/USDT", "RAY/USDT", "WOO/USDT", "ASTR/USDT"],
         "pair_blacklist": [
 
         ]
     },
     "pairlists": [
-        {
-            "method": "MarketCapPairList",
-            "number_assets": 1000,
-            "max_rank": 250,
-            "refresh_period": 1800
-        },
-        {
-            "method": "VolatilityFilter",
-            "lookback_days": 10,
-            "min_volatility": 0.05,
-            "refresh_period": 1800
-        },
+        // {"method": "StaticPairList"}
+        // {
+        //     "method": "MarketCapPairList",
+        //     "number_assets": 1000,
+        //     "max_rank": 250,
+        //     "refresh_period": 1800
+        // },
+        // {
+        //     "method": "VolatilityFilter",
+        //     "lookback_days": 10,
+        //     "min_volatility": 0.05,
+        //     "refresh_period": 600
+        // },
         {
             "method": "VolumePairList",
-            "number_assets": 100,  
-            "sort_key": "quoteVolume"
+            "number_assets": 1000,  
+            "sort_key": "quoteVolume",
+            "min_value": 1000000
         },
        
         {"method": "FullTradesFilter"}
