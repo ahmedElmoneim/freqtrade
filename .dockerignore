@@ -15,7 +15,7 @@ README.md
 freqtrade.service
 freqtrade.egg-info
 
-config.json*
+# config.json*
 *.sqlite
 user_data
 *.log
