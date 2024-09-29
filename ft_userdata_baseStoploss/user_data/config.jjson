@@ -1,0 +1,108 @@
+
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "max_open_trades": 3,
+    "stake_currency": "USDT",
+    "stake_amount": 10,
+    "tradable_balance_ratio": 1,
+    "custom_leverage": 1,
+    "fiat_display_currency": "USD",
+    "dry_run": true,
+    "dry_run_wallet": 500,
+    "cancel_open_orders_on_exit": false,
+    "trading_mode": "spot",
+    "margin_mode": "",
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 2,
+        "exit_timeout_count": 0,
+        "unit": "minutes"
+    },
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1,
+        "price_last_balance": 0.0,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+
+    },
+    "exit_pricing":{
+        "price_side": "same",
+        "use_order_book": false,
+        "order_book_top": 1
+        
+    },
+    "order_types" :{
+        "entry": "limit",
+        "exit": "limit",
+        "emergency_exit": "market",
+        "force_exit": "market",
+        "force_entry": "market",
+        "stoploss": "market",
+        "stoploss_on_exchange": true,
+        "stoploss_on_exchange_interval": 60
+    },
+
+    "exchange": {
+        "name": "binance",
+        "key": "0p6OrxuD7cFcBffHsu2bWyDtccKXL2iHERW1aIpvHbLsEnAWKhDItq1MXemHdggm",
+        "secret": "5ytrfilQepXQ2SJTQYardvVc7fa5xrtcMQGpwZX84bgso8yOflvLVH2NhOX4cN1O",
+        "ccxt_config": {"enableRateLimit": true},
+        "ccxt_async_config": { "enableRateLimit": true,
+        "rateLimit": 200},
+        "pair_whitelist": ["ETH/USDT", "SOL/USDT", "PEPE/USDT", "SUI/USDT", "WIF/USDT", "BNB/USDT", "SEI/USDT", "WLD/USDT", "FET/USDT", "SAGA/USDT", "DOGE/USDT", "TAO/USDT", "NOT/USDT", "AVAX/USDT", "FTM/USDT", "DOGS/USDT", "NEAR/USDT", "BOME/USDT", "SHIB/USDT", "TIA/USDT", "RUNE/USDT", "ENA/USDT", "CELO/USDT", "AAVE/USDT", "ARB/USDT", "BONK/USDT", "INJ/USDT", "FLOKI/USDT", "ZRO/USDT", "ORDI/USDT", "STRK/USDT", "APT/USDT", "ADA/USDT", "LINK/USDT", "PEOPLE/USDT", "PENDLE/USDT", "ZK/USDT", "AR/USDT", "JUP/USDT", "CRV/USDT", "ARKM/USDT", "STX/USDT", "FIL/USDT", "ETHFI/USDT", "ICP/USDT", "RENDER/USDT", "ALT/USDT", "POL/USDT", "OP/USDT", "BCH/USDT", "CHZ/USDT", "DOT/USDT", "CFX/USDT", "LTC/USDT", "GALA/USDT", "DYDX/USDT", "BLUR/USDT", "ATOM/USDT", "JTO/USDT", "MANTA/USDT", "LDO/USDT", "AEVO/USDT", "MKR/USDT", "DYM/USDT", "GMT/USDT", "UNI/USDT", "CKB/USDT", "LUNA/USDT", "ZRX/USDT", "HBAR/USDT", "LUNC/USDT", "ENS/USDT", "SUPER/USDT", "GRT/USDT", "MINA/USDT", "JASMY/USDT", "CAKE/USDT", "MEME/USDT", "EOS/USDT", "OM/USDT", "ILV/USDT", "THETA/USDT", "PYTH/USDT", "W/USDT", "IMX/USDT", "KAVA/USDT", "1INCH/USDT", "LPT/USDT", "ROSE/USDT", "METIS/USDT", "GLM/USDT", "ALGO/USDT", "VET/USDT", "POLYX/USDT", "APE/USDT", "RSR/USDT", "SAND/USDT", "RAY/USDT", "WOO/USDT", "ASTR/USDT"],
+        "pair_blacklist": [
+
+        ]
+    },
+    "pairlists": [
+        // {"method": "StaticPairList"},
+        // {
+        //     "method": "MarketCapPairList",
+        //     "number_assets": 1000,
+        //     "max_rank": 250,
+        //     "refresh_period": 1800
+        // },
+        // {
+        //     "method": "VolatilityFilter",
+        //     "lookback_days": 10,
+        //     "min_volatility": 0.05,
+        //     "refresh_period": 600
+        // },
+        {
+            "method": "VolumePairList",
+            "number_assets": 1000,  
+            "sort_key": "quoteVolume",
+            "min_value": 1000000
+        },
+       
+        {"method": "FullTradesFilter"}
+
+    ],
+    "telegram": {
+        "enabled": true,
+        "token": "7641957621:AAF79dcdnWVHmZ22cVjaO1UDyL02dFPWXqI",
+        "chat_id": "1486443491"
+    },
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "0.0.0.0",
+        "listen_port": 6666,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "e2f887dafd52392ab04ee89e5bf315637ba49c5dc9a2417df71496127b4db05b",
+        "ws_token": "Mma0I4eLdyEMUIR0VSLVuN0yRB-84jpHug",
+        "CORS_origins": [],
+        "username": "freqtrader",
+        "password": "freq735"
+    },
+    "bot_name": "freqtrade",
+    "initial_state": "running",
+    "force_entry_enable": false,
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}
