@@ -88,7 +88,7 @@ class ichiV1(IStrategy):
             }
         }
     }
-    Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.33, space="buy")
+    Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.99, space="buy")
     # Stack_AmountP = IntParameter(1, 20, default=5 ,space="buy")
     def custom_stake_amount(self, pair: str, current_time: datetime, current_rate: float,
                                 proposed_stake: float, min_stake: Optional[float], max_stake: float,
