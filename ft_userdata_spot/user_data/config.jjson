@@ -1,10 +1,10 @@
-
 {
     "$schema": "https://schema.freqtrade.io/schema.json",
-    "max_open_trades": 1,
+    "max_open_trades": 10,
     "stake_currency": "USDT",
     "stake_amount": 10,
     "tradable_balance_ratio": 1,
+    "custom_leverage": 1,
     "fiat_display_currency": "USD",
     "dry_run": true,
     "dry_run_wallet": 500,
@@ -52,13 +52,13 @@
         "ccxt_config": {"enableRateLimit": true},
         "ccxt_async_config": { "enableRateLimit": true,
         "rateLimit": 200},
-        "pair_whitelist": ["ETH/USDT", "SOL/USDT", "PEPE/USDT", "SUI/USDT", "WIF/USDT", "BNB/USDT", "SEI/USDT", "WLD/USDT", "FET/USDT", "SAGA/USDT", "DOGE/USDT", "TAO/USDT", "NOT/USDT", "AVAX/USDT", "FTM/USDT", "DOGS/USDT", "NEAR/USDT", "BOME/USDT", "SHIB/USDT", "TIA/USDT", "RUNE/USDT", "ENA/USDT", "CELO/USDT", "AAVE/USDT", "ARB/USDT", "BONK/USDT", "INJ/USDT", "FLOKI/USDT", "ZRO/USDT", "ORDI/USDT", "STRK/USDT", "APT/USDT", "ADA/USDT", "LINK/USDT", "PEOPLE/USDT", "PENDLE/USDT", "ZK/USDT", "AR/USDT", "JUP/USDT", "CRV/USDT", "ARKM/USDT", "STX/USDT", "FIL/USDT", "ETHFI/USDT", "ICP/USDT", "RENDER/USDT", "ALT/USDT", "POL/USDT", "OP/USDT", "BCH/USDT", "CHZ/USDT", "DOT/USDT", "CFX/USDT", "LTC/USDT", "GALA/USDT", "DYDX/USDT", "BLUR/USDT", "ATOM/USDT", "JTO/USDT", "MANTA/USDT", "LDO/USDT", "AEVO/USDT", "MKR/USDT", "DYM/USDT", "GMT/USDT", "UNI/USDT", "CKB/USDT", "LUNA/USDT", "ZRX/USDT", "HBAR/USDT", "LUNC/USDT", "ENS/USDT", "SUPER/USDT", "GRT/USDT", "MINA/USDT", "JASMY/USDT", "CAKE/USDT", "MEME/USDT", "EOS/USDT", "OM/USDT", "ILV/USDT", "THETA/USDT", "PYTH/USDT", "W/USDT", "IMX/USDT", "KAVA/USDT", "1INCH/USDT", "LPT/USDT", "ROSE/USDT", "METIS/USDT", "GLM/USDT", "ALGO/USDT", "VET/USDT", "POLYX/USDT", "APE/USDT", "RSR/USDT", "SAND/USDT", "RAY/USDT", "WOO/USDT", "ASTR/USDT"],
+        "pair_whitelist": ["BTC/USDT","ARK/USDT","PROS/USDT","DENT/USDT","SANTOS/USDT","JUV/USDT","ALT/USDT","IOTX/USDT","USTC/USDT","REZ/USDT","DEGO/USDT","BNX/USDT","PHA/USDT","ETH/USDT", "SOL/USDT", "PEPE/USDT", "SUI/USDT", "WIF/USDT", "BNB/USDT", "SEI/USDT", "WLD/USDT", "FET/USDT", "SAGA/USDT", "DOGE/USDT", "TAO/USDT", "NOT/USDT", "AVAX/USDT", "FTM/USDT", "DOGS/USDT", "NEAR/USDT", "BOME/USDT", "DIA/USDT", "TIA/USDT", "RUNE/USDT", "ENA/USDT", "CELO/USDT", "AAVE/USDT", "ARB/USDT", "ASR/USDT", "INJ/USDT", "FLOKI/USDT", "ZRO/USDT", "ORDI/USDT", "STRK/USDT", "APT/USDT", "ADA/USDT", "LINK/USDT", "PEOPLE/USDT", "PENDLE/USDT", "ZK/USDT", "NEIRO/USDT", "JUP/USDT", "CRV/USDT", "ARKM/USDT", "STX/USDT", "FIL/USDT", "IQ/USDT", "ICP/USDT", "RENDER/USDT", "POL/USDT", "OP/USDT", "BCH/USDT", "CHZ/USDT", "DOT/USDT", "CFX/USDT", "LTC/USDT", "DYDX/USDT", "BLUR/USDT", "ATOM/USDT", "JTO/USDT", "MANTA/USDT", "LDO/USDT", "AEVO/USDT", "MKR/USDT", "DYM/USDT", "GMT/USDT", "UNI/USDT", "CKB/USDT", "LUNA/USDT", "ZRX/USDT", "HBAR/USDT", "LUNC/USDT", "ENS/USDT", "SUPER/USDT", "GRT/USDT", "MINA/USDT", "JASMY/USDT", "CAKE/USDT", "MEME/USDT", "EOS/USDT", "OM/USDT", "ILV/USDT", "THETA/USDT", "PYTH/USDT", "W/USDT", "IMX/USDT", "KAVA/USDT", "1INCH/USDT", "LPT/USDT", "ROSE/USDT", "METIS/USDT", "GLM/USDT", "ALGO/USDT", "VET/USDT", "POLYX/USDT", "APE/USDT", "RSR/USDT", "SAND/USDT", "RAY/USDT", "WOO/USDT", "ASTR/USDT"],
         "pair_blacklist": [
-
+            "BNB/.*"
         ]
     },
     "pairlists": [
-        // {"method": "StaticPairList"}
+        {"method": "StaticPairList"},
         // {
         //     "method": "MarketCapPairList",
         //     "number_assets": 1000,
@@ -71,13 +71,17 @@
         //     "min_volatility": 0.05,
         //     "refresh_period": 600
         // },
+        // {
+        //     "method": "VolumePairList",
+        //     "number_assets": 1000,  
+        //     "sort_key": "quoteVolume",
+        //     "min_value": 1000000
+        // },
         {
-            "method": "VolumePairList",
-            "number_assets": 1000,  
-            "sort_key": "quoteVolume",
-            "min_value": 1000000
+            "method": "PerformanceFilter",
+            "minutes": 1440  // rolling 24h
+            // "min_profit": 0.01  // minimal profit 1%
         },
-       
         {"method": "FullTradesFilter"}
 
     ],
