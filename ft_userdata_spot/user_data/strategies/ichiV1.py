@@ -91,7 +91,7 @@ class ichiV1(IStrategy):
 
         heikinashi = qtpylib.heikinashi(dataframe)
         dataframe['open'] = heikinashi['open']
-        #dataframe['close'] = heikinashi['close']
+        dataframe['close'] = heikinashi['close']
         dataframe['high'] = heikinashi['high']
         dataframe['low'] = heikinashi['low']
 
@@ -114,7 +114,7 @@ class ichiV1(IStrategy):
         dataframe['trend_open_8h'] = ta.EMA(dataframe['open'], timeperiod=96)
 
         dataframe['fan_magnitude'] = (dataframe['trend_close_1h'] / dataframe['trend_close_8h'])
-        dataframe['fan_magnitude_gain'] = dataframe['fan_magnitude'] / dataframe['fan_magnitude'].shift(1)
+        dataframe['fan_magnitude_gain'] = dataframe['fan_magnitude'].shift(-1) / dataframe['fan_magnitude']
 
         ichimoku = ftt.ichimoku(dataframe, conversion_line_period=20, base_line_periods=60, laggin_span=120, displacement=30)
         dataframe['chikou_span'] = ichimoku['chikou_span']
@@ -199,7 +199,7 @@ class ichiV1(IStrategy):
         conditions.append(dataframe['fan_magnitude'] > 1)
 
         for x in range(self.buy_params['buy_fan_magnitude_shift_value']):
-            conditions.append(dataframe['fan_magnitude'].shift(x+1) < dataframe['fan_magnitude'])
+            conditions.append(dataframe['fan_magnitude'] < dataframe['fan_magnitude'].shift(-x-1))
 
         if conditions:
             dataframe.loc[
