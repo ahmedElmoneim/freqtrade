@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 from pandas import DataFrame
 from typing import Dict, Optional, Union, Tuple
 import random
+from scipy.signal import argrelextrema
 
 from freqtrade.strategy import (
     IStrategy,
@@ -65,16 +66,22 @@ class RandSignalStrategy(IStrategy):
 
     # Minimal ROI designed for the strategy.
     # This attribute will be overridden if the config file contains "minimal_roi".
+    # minimal_roi = {
+    #     "0": 0.15,
+    #     "35": 0.069,
+    #     "49": 0.028,
+    #     # "162": 0
+    # }
     minimal_roi = {
-        "0": 0.15,
-        "35": 0.069,
+        "0": 0.05,
+        "35": 0.03,
         "49": 0.028,
         # "162": 0
     }
 
     # Optimal stoploss designed for the strategy.
     # This attribute will be overridden if the config file contains "stoploss".
-    stoploss = -0.168
+    stoploss = -0.06
 
     # Trailing stoploss
     trailing_stop = True
@@ -94,8 +101,8 @@ class RandSignalStrategy(IStrategy):
     ignore_roi_if_entry_signal = True
 
      # Hyperoptable parameters
-    threshold_peak = IntParameter(0, 30, default=1 ,space="sell")
-    threshold_thou = IntParameter(0, 30, default=5 ,space="buy")
+    threshold_peak = IntParameter(0, 30, default=0 ,space="sell")
+    threshold_thou = IntParameter(0, 30, default=4 ,space="buy")
 
     buy_rsi = IntParameter(low=1, high=80, default=50, space="buy", optimize=True, load=True)
     # sell_rsi = IntParameter(low=buy_rsi.value, high=40, default=50, space="sell", optimize=True, load=True)
@@ -158,7 +165,7 @@ class RandSignalStrategy(IStrategy):
 
 
     # Number of candles the strategy requires before producing valid signals
-    startup_candle_count: int = 6
+    startup_candle_count: int = 200
 
     # Optional order type mapping.
     order_types = {
@@ -184,8 +191,32 @@ class RandSignalStrategy(IStrategy):
             "RSI": {
                 "rsi": {"color": "red"},
             },
+            "Peak":{
+                "peak":{"color": "blue"},
+                "trough":{"color": "red"}
+            }
         },
     }
+    Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.02, space="buy")
+    # Stack_AmountP = IntParameter(1, 20, default=5 ,space="buy")
+    def custom_stake_amount(self, pair: str, current_time: datetime, current_rate: float,
+                                proposed_stake: float, min_stake: Optional[float], max_stake: float,
+                                leverage: float, entry_tag: Optional[str], side: str,
+                                **kwargs) -> float:
+
+            # dataframe, _ = self.dp.get_analyzed_dataframe(pair=pair, timeframe=self.timeframe)
+            # current_candle = dataframe.iloc[-1].squeeze()
+
+            # if current_candle["fastk_rsi_1h"] > current_candle["fastd_rsi_1h"]:
+            #     if self.config["stake_amount"] == "unlimited":
+            #         # Use entire available wallet during favorable conditions when in compounding mode.
+            #         return max_stake
+            #     else:
+            #         # Compound profits during favorable conditions instead of using a static stake.
+            #         return self.wallets.get_total_stake_amount() / self.config["max_open_trades"]
+            # proposed_stake = 10
+            # Use default stake amount.
+            return self.wallets.get_total_stake_amount() *self.Stack_AmountP.value
 
     def informative_pairs(self):
         """
@@ -220,13 +251,50 @@ class RandSignalStrategy(IStrategy):
             rsi_prev = df.loc[i - 1,rsi_column]
             rsi_next = df.loc[i + 1,rsi_column]
 
-# df["col"][row_indexer] = value
-
-# Use `df.loc[row_indexer, "col"] = values`
-            if (rsi_current > rsi_prev) and (rsi_current > rsi_next) and (abs(rsi_current - rsi_prev) > threshold_peak) and (abs(rsi_current - rsi_next) > threshold_peak):
+            if (rsi_current >= rsi_prev) and (rsi_current > rsi_next) and (abs(rsi_current - rsi_prev) >= threshold_peak) and (abs(rsi_current - rsi_next) > threshold_peak):
                 df.loc[i,"peak"]=True
-            elif (rsi_current < rsi_prev) and (rsi_current < rsi_next) and (abs(rsi_current - rsi_prev) > threshold_thou)and (abs(rsi_current - rsi_next) > threshold_thou):
+            elif (rsi_current <= rsi_prev) and (rsi_current < rsi_next) and (abs(rsi_current - rsi_prev) >= threshold_thou)and (abs(rsi_current - rsi_next) > threshold_thou):
                 df.loc[i,"trough"]=True
+
+        return df
+    
+    def identify_extrema_optimized(self,df, rsi_column, threshold_peak, threshold_trough):
+        """
+        Identifies peaks and troughs in the given RSI data using vectorized operations.
+
+        Args:
+            df: Pandas DataFrame containing the RSI data.
+            rsi_column: Name of the column containing RSI values.
+            threshold_peak: Minimum difference required for a peak.
+            threshold_trough: Minimum difference required for a trough.
+
+        Returns:
+            A Pandas DataFrame with additional columns indicating peaks and troughs.
+        """
+
+        # Convert RSI column to NumPy array
+        rsi_values = np.array(df[rsi_column])
+
+        # Calculate differences between consecutive values
+        diff = np.diff(rsi_values)
+        diff = np.insert(diff, 0, 0)
+        diff2= np.diff(diff)
+
+        # Identify peaks and troughs using Boolean masking
+        # Pad the diff array with a constant value at the beginning
+        # padded_diff = np.pad(diff, (1, 0), mode='constant')
+        
+        # diff2 = np.pad(padded_diff, (1, 0), mode='constant')  # Second-order difference
+        # diff = np.insert(diff, 0, 0)
+        diff2 = np.insert(diff2, 0, 0)
+        
+        # df["diff"] = diff
+        # df["diff2"]=diff2
+
+        df['peak'] = (diff[:] == 0) & (diff2[:] < -threshold_peak)
+        df['trough'] = (diff[:] == 0) & (diff2[:] > threshold_trough)
+
+        # df['trough'] = np.logical_and((diff[:-1] < 0) & (diff[1:] > 0), np.abs(diff[:-1]) > threshold_trough)
 
         return df
 
@@ -254,7 +322,7 @@ class RandSignalStrategy(IStrategy):
             (
                 # (qtpylib.crossed_above(dataframe["rsi"], self.buy_rsi.value))
                 # &dataframe["previous_candle_sentiment"] == True
-                (dataframe["trough"].shift(1) == True)
+                (dataframe["trough"] == True)
                 & (dataframe["volume"] > dataframe["volume"].mean()*self.volMean.value)
                 & (dataframe["rsi"]< self.buy_rsi.value)
             ),
@@ -315,7 +383,7 @@ class RandSignalStrategy(IStrategy):
         last_enter_long_rsi = (dataframe[dataframe['enter_long']==1]).tail(1)["rsi"]
         if not last_enter_long_rsi.empty:
             dataframe.loc[
-                (dataframe["peak"].shift(1)==True) &
+                (dataframe["peak"]==True) &
                 (dataframe["rsi"] > last_enter_long_rsi.iloc[0]+self.sell_rsi.value)
                  ,
                 "exit_long",
