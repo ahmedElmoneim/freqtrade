@@ -65,17 +65,11 @@ class RandSignalStrategy(IStrategy):
 
     # Minimal ROI designed for the strategy.
     # This attribute will be overridden if the config file contains "minimal_roi".
-    # minimal_roi = {
-    #     "0": 0.15,
-    #     "35": 0.069,
-    #     "49": 0.028,
-    #     "7200": 0
-    # }
-    minimal_roi ={
-      "0":0.131,
-      "10":0.046,
-      "49":0.022,
-      "60":0
+    minimal_roi = {
+        "0": 0.15,
+        "35": 0.069,
+        "49": 0.028,
+        # "162": 0
     }
 
     # Optimal stoploss designed for the strategy.
@@ -229,9 +223,9 @@ class RandSignalStrategy(IStrategy):
 # df["col"][row_indexer] = value
 
 # Use `df.loc[row_indexer, "col"] = values`
-            if (rsi_current > rsi_prev) and (rsi_current > rsi_next)  and (abs(rsi_current - rsi_next) > threshold_peak):
+            if (rsi_current > rsi_prev) and (rsi_current > rsi_next) and (abs(rsi_current - rsi_prev) > threshold_peak) and (abs(rsi_current - rsi_next) > threshold_peak):
                 df.loc[i,"peak"]=True
-            elif (rsi_current < rsi_prev) and (rsi_current < rsi_next) and (abs(rsi_current - rsi_next) > threshold_thou):
+            elif (rsi_current < rsi_prev) and (rsi_current < rsi_next) and (abs(rsi_current - rsi_prev) > threshold_thou)and (abs(rsi_current - rsi_next) > threshold_thou):
                 df.loc[i,"trough"]=True
 
         return df
@@ -260,7 +254,7 @@ class RandSignalStrategy(IStrategy):
             (
                 # (qtpylib.crossed_above(dataframe["rsi"], self.buy_rsi.value))
                 # &dataframe["previous_candle_sentiment"] == True
-                (dataframe["trough"] == True)
+                (dataframe["trough"].shift(1) == True)
                 & (dataframe["volume"] > dataframe["volume"].mean()*self.volMean.value)
                 & (dataframe["rsi"]< self.buy_rsi.value)
             ),
@@ -321,7 +315,7 @@ class RandSignalStrategy(IStrategy):
         last_enter_long_rsi = (dataframe[dataframe['enter_long']==1]).tail(1)["rsi"]
         if not last_enter_long_rsi.empty:
             dataframe.loc[
-                (dataframe["peak"]==True) &
+                (dataframe["peak"].shift(1)==True) &
                 (dataframe["rsi"] > last_enter_long_rsi.iloc[0]+self.sell_rsi.value)
                  ,
                 "exit_long",
