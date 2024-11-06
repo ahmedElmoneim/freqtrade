@@ -322,7 +322,7 @@ class RandSignalStrategy(IStrategy):
             (
                 # (qtpylib.crossed_above(dataframe["rsi"], self.buy_rsi.value))
                 # &dataframe["previous_candle_sentiment"] == True
-                (dataframe["trough"] == True)
+                (dataframe["trough"].shift(1) == True)
                 & (dataframe["volume"] > dataframe["volume"].mean()*self.volMean.value)
                 & (dataframe["rsi"]< self.buy_rsi.value)
             ),
@@ -383,7 +383,7 @@ class RandSignalStrategy(IStrategy):
         last_enter_long_rsi = (dataframe[dataframe['enter_long']==1]).tail(1)["rsi"]
         if not last_enter_long_rsi.empty:
             dataframe.loc[
-                (dataframe["peak"]==True) &
+                (dataframe["peak"].shift(1)==True) &
                 (dataframe["rsi"] > last_enter_long_rsi.iloc[0]+self.sell_rsi.value)
                  ,
                 "exit_long",
