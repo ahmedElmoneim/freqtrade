@@ -72,16 +72,36 @@ class RandSignalStrategy(IStrategy):
     #     "49": 0.028,
     #     # "162": 0
     # }
+    # minimal_roi = {
+    #     "0": 0.05,
+    #     "35": 0.03,
+    #     "49": 0.028,
+    #     # "162": 0
+    # }
     minimal_roi = {
-        "0": 0.05,
-        "35": 0.03,
-        "49": 0.028,
+        # "0": 0.05,
+        # "35": 0.03,
+        "0": 0.07,
+        "90": 0.06,
+        "132": .05,
+        "180": .04,
+        "1440":.03, # 24h
+        "2880":.02, # 48h
+        "4320":0.01, #3d
+        "5760":0,#4d
+        # "7200":-.01,#5d
+        # "8640":-.02,#6d
+        # "10080":-.03,#7d
+        # "12000":-.04,#8d
+        # "13800":-.05,#9d
+        # "15520":-.06,#10d
+        # "240": .03
         # "162": 0
     }
 
     # Optimal stoploss designed for the strategy.
     # This attribute will be overridden if the config file contains "stoploss".
-    stoploss = -0.06
+    stoploss = -.06
 
     # Trailing stoploss
     trailing_stop = True
@@ -106,7 +126,7 @@ class RandSignalStrategy(IStrategy):
 
     buy_rsi = IntParameter(low=1, high=80, default=50, space="buy", optimize=True, load=True)
     # sell_rsi = IntParameter(low=buy_rsi.value, high=40, default=50, space="sell", optimize=True, load=True)
-    sell_rsi = IntParameter(low=1, high=40, default=28, space="sell", optimize=True, load=True)
+    sell_rsi = IntParameter(low=1, high=40, default=20, space="sell", optimize=True, load=True)
 
     # short_rsi = IntParameter(low=51, high=100, default=70, space="sell", optimize=True, load=True)
     # exit_short_rsi = IntParameter(low=30, high=short_rsi.value, default=60, space="buy", optimize=True, load=True)
@@ -116,7 +136,7 @@ class RandSignalStrategy(IStrategy):
     # leverageP = IntParameter(1, 125, default=1 ,space="buy")
     # Stack_AmountP = DecimalParameter(1, 100, decimals=2, default=1, space="buy")
     volMean = IntParameter(1, 20, default=1 ,space="buy")
-   
+
 
 
 
@@ -142,7 +162,7 @@ class RandSignalStrategy(IStrategy):
     #         return max_leverage
     #     else:
     #         return self.leverageP.value
-    
+
 # Stack_AmountP = DecimalParameter(1, 100, decimals=2, default=1, space="buy")
     # def custom_stake_amount(self, pair: str, current_time: datetime, current_rate: float,
     #                             proposed_stake: float, min_stake: Optional[float], max_stake: float,
@@ -194,7 +214,13 @@ class RandSignalStrategy(IStrategy):
             "Peak":{
                 "peak":{"color": "blue"},
                 "trough":{"color": "red"}
+            },
+            "adx":{
+                "adx":{"color": "blue"},
+                "plus_di":{"color": "green"},
+                "minus_di":{"color": "red"}
             }
+
         },
     }
     Stack_AmountP = DecimalParameter(.01, 1, decimals=2, default=.02, space="buy")
@@ -302,6 +328,10 @@ class RandSignalStrategy(IStrategy):
         # dataframe["randomSignal"] = np.random.randint(1, 11, size=len(dataframe))
         # RSI
         dataframe["rsi"] = ta.RSI(dataframe)
+
+        dataframe['adx'] = ta.ADX(dataframe)
+        dataframe['plus_di'] = ta.PLUS_DI(dataframe)
+        dataframe['minus_di'] = ta.MINUS_DI(dataframe)
         threshold_peak = self.threshold_peak.value
         threshold_thou = self.threshold_thou.value
 
@@ -325,6 +355,7 @@ class RandSignalStrategy(IStrategy):
                 (dataframe["trough"].shift(1) == True)
                 & (dataframe["volume"] > dataframe["volume"].mean()*self.volMean.value)
                 & (dataframe["rsi"]< self.buy_rsi.value)
+                # &(dataframe['adx'] < 20) & (dataframe['plus_di'] < dataframe['minus_di'])
             ),
             "enter_long",
         ] = 1
@@ -383,8 +414,16 @@ class RandSignalStrategy(IStrategy):
         last_enter_long_rsi = (dataframe[dataframe['enter_long']==1]).tail(1)["rsi"]
         if not last_enter_long_rsi.empty:
             dataframe.loc[
-                (dataframe["peak"].shift(1)==True) &
-                (dataframe["rsi"] > last_enter_long_rsi.iloc[0]+self.sell_rsi.value)
+                (
+                    (dataframe["peak"].shift(1)==True) &
+                    (dataframe["rsi"] > last_enter_long_rsi.iloc[0]+self.sell_rsi.value)
+                )
+                # &
+                # (dataframe['adx'] > 25) & (dataframe['minus_di'] > dataframe['plus_di'])
+                # |(
+                #     qtpylib.crossed_above(dataframe['minus_di'], dataframe['plus_di'])
+                # )
+
                  ,
                 "exit_long",
             ] = 1

@@ -153,8 +153,10 @@
 "ZIL/USDT",
 "COMP/USDT",
 "WOO/USDT",
-"TON/USDT"
-
+"TON/USDT",
+"SAND/USDT",
+"FLOW/USDT",
+"KAVA/USDT", "POL/USDT", "QNT/USDT", "ALGO/USDT", "LINK/USDT", "CAKE/USDT", "MKR/USDT"
        ],
         "pair_blacklist": [
             "BNB/.*"
