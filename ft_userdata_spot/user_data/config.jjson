@@ -2,7 +2,7 @@
     "$schema": "https://schema.freqtrade.io/schema.json",
     "max_open_trades": -1,
     "stake_currency": "USDT",
-    "stake_amount": 10,
+    "stake_amount": "unlimited",
     "tradable_balance_ratio": 1.0,
     "fiat_display_currency": "USD",
     "dry_run": true,
@@ -16,7 +16,20 @@
         "exit_timeout_count": 0,
         "unit": "minutes"
     },
-    
+    "edge": {
+        "enabled": true,
+        "process_throttle_secs": 3600,
+        "calculate_since_number_of_days": 7,
+        "allowed_risk": 0.02,
+        "stoploss_range_min": -0.01,
+        "stoploss_range_max": -0.15,
+        "stoploss_range_step": -0.01,
+        "minimum_winrate": 0.9,
+        "minimum_expectancy": 0.03,
+        "min_trade_number": 10,
+        "max_trade_duration_minute": 2880,
+        "remove_pumps": false
+    },
     "entry_pricing": {
         "price_side": "same",
         "use_order_book": true,
@@ -212,4 +225,5 @@
     "internals": {
         "process_throttle_secs": 5
     }
+
 }
